@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dev.eduardoleal.meecommerce.Home;
+import dev.eduardoleal.meecommerce.MainActivity;
 import dev.eduardoleal.meecommerce.R;
 
 public class SignUp extends AppCompatActivity {
@@ -148,7 +149,7 @@ public class SignUp extends AppCompatActivity {
 
     private void onSuccessRegisterUser() {
         Toast.makeText(getApplicationContext(), "Please activated account with email.", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(getApplicationContext(), Home.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
 }
