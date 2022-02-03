@@ -98,7 +98,7 @@
 
 
         <Button
-            android:id="@+id/btn_singin"
+            android:id="@+id/btn_signup_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -109,7 +109,7 @@
 
 
         <TextView
-            android:id="@+id/txt_signup"
+            android:id="@+id/txt_signin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -122,7 +122,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.157"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_singin"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signup_user"
             app:layout_constraintVertical_bias="0.849" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

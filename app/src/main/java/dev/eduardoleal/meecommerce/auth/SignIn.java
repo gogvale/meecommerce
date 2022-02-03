@@ -37,7 +37,7 @@ public class SignIn extends AppCompatActivity {
         edtPassword = findViewById(R.id.edt_password);
         btnSignIn = findViewById(R.id.btn_user_signin);
         btnRecoveryPassword = findViewById(R.id.btn_user_recovery_password);
-        txtSignUp = findViewById(R.id.txt_signup);
+        txtSignUp = findViewById(R.id.txt_signin);
 
         // TODO: Initialize context app
         mAuth = FirebaseAuth.getInstance();
@@ -78,7 +78,7 @@ public class SignIn extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Please enter password!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please enter password...", Toast.LENGTH_LONG).show();
             return;
         }
 
