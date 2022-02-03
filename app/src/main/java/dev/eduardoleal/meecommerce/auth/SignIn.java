@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kusu.loadingbutton.LoadingButton;
 
 import dev.eduardoleal.meecommerce.Home;
 import dev.eduardoleal.meecommerce.R;
@@ -26,7 +27,8 @@ import dev.eduardoleal.meecommerce.R;
 public class SignIn extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
-    Button btnSignIn, btnRecoveryPassword;
+    Button   btnRecoveryPassword;
+    LoadingButton btnSignIn;
     TextView txtSignUp;
     private FirebaseAuth mAuth;
 
@@ -84,14 +86,20 @@ public class SignIn extends AppCompatActivity {
             return;
         }
 
+        btnSignIn.setEnabled(false);
+        btnSignIn.showLoading();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null && user.isEmailVerified()) {
+                        btnSignIn.hideLoading();
+                        btnSignIn.setEnabled(true);
                         onUserRedirectToHome();
                     } else {
+                        btnSignIn.hideLoading();
+                        btnSignIn.setEnabled(true);
                         onUserVerifyEmail();
                     }
                 } else {

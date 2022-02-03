@@ -47,16 +47,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
-    <Button
+    <com.kusu.loadingbutton.LoadingButton
         android:id="@+id/btn_user_signin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="Sign In"
+        android:textColor="@color/black"
+        app:lb_buttonColor="#b2dfdb"
+        app:lb_isCircular="true"
+        app:lb_isShadowEnable="true"
+        app:lb_loaderColor="#fafafa"
+        app:lb_shadowHeight="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
-
+        app:layout_constraintTop_toBottomOf="@+id/edt_password"/>
     <Button
         android:id="@+id/btn_user_recovery_password"
         android:layout_width="0dp"

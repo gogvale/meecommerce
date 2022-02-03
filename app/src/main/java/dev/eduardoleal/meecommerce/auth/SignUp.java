@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,20 +19,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.kusu.loadingbutton.LoadingButton;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import dev.eduardoleal.meecommerce.Home;
 import dev.eduardoleal.meecommerce.MainActivity;
 import dev.eduardoleal.meecommerce.R;
 
 public class SignUp extends AppCompatActivity {
 
     EditText edtName, edtLastName, edtEmail, edtPassword, edtRepeatPassword;
-    Button btnSignUp;
+    LoadingButton btnSignUp;
     TextView txtSignIn;
     private FirebaseAuth mAuth;
 
@@ -101,6 +100,8 @@ public class SignUp extends AppCompatActivity {
             return;
         }
 
+        btnSignUp.setEnabled(false);
+        btnSignUp.showLoading();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -110,6 +111,8 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "User created!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    btnSignUp.hideLoading();
+                    btnSignUp.setEnabled(true);
                 }
             }
         });
@@ -143,12 +146,16 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getApplicationContext(), "Oops there was error, try again later...", Toast.LENGTH_SHORT).show();
+                btnSignUp.hideLoading();
+                btnSignUp.setEnabled(true);
             }
         });
     }
 
     private void onSuccessRegisterUser() {
         Toast.makeText(getApplicationContext(), "Please activated account with email.", Toast.LENGTH_SHORT).show();
+        btnSignUp.hideLoading();
+        btnSignUp.setEnabled(true);
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
