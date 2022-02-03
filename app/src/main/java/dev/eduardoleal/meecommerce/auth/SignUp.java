@@ -13,11 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import dev.eduardoleal.meecommerce.Home;
 import dev.eduardoleal.meecommerce.R;
 
 public class SignUp extends AppCompatActivity {
@@ -82,8 +91,8 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter email...", Toast.LENGTH_LONG).show();
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Please enter password...", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(password) && password.length() < 6) {
+            Toast.makeText(getApplicationContext(), "Please enter a password, minimum long 6 characters...", Toast.LENGTH_LONG).show();
             return;
         }
         if (!password.equals(repeatPassword)) {
@@ -105,7 +114,41 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    private void registerUserData(FirebaseUser user){
+    private void registerUserData(FirebaseUser user) {
+        String userId = user.getUid();
+        String userName, userLastName, userEmail;
 
+        userName = edtName.getText().toString().trim();
+        userLastName = edtLastName.getText().toString().trim();
+        userEmail = edtEmail.getText().toString().trim();
+        Date currentTime = Calendar.getInstance().getTime();
+
+        Map<String, Object> dataUser = new HashMap<>();
+        dataUser.put("userId", userId);
+        dataUser.put("userName", userName);
+        dataUser.put("userLastName", userLastName);
+        dataUser.put("userEmail", userEmail);
+        dataUser.put("createAt", currentTime);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(userId).set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                user.sendEmailVerification();
+                onSuccessRegisterUser();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Oops there was error, try again later...", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void onSuccessRegisterUser() {
+        Toast.makeText(getApplicationContext(), "Please activated account with email.", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getApplicationContext(), Home.class);
+        startActivity(i);
     }
 }
