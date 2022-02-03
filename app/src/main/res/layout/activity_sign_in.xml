@@ -11,7 +11,7 @@
         android:id="@+id/txt_title_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="100dp"
         android:text="Sign In"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -37,7 +37,7 @@
         android:id="@+id/edt_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <Button
-        android:id="@+id/btn_singin"
+        android:id="@+id/btn_user_signin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -57,10 +57,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
+    <Button
+        android:id="@+id/btn_user_recovery_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FF9800"
+        android:text="Recovery Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_user_signin" />
+
     <TextView
         android:id="@+id/txt_signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:text="or sign up "
         android:textAlignment="center"
         android:textSize="24sp"
@@ -69,6 +82,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_singin"
+        app:layout_constraintTop_toBottomOf="@+id/btn_user_recovery_password"
         app:layout_constraintVertical_bias="0.849" />
 </androidx.constraintlayout.widget.ConstraintLayout>
