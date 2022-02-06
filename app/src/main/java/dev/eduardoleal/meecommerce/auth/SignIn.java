@@ -1,6 +1,5 @@
 package dev.eduardoleal.meecommerce.auth;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,13 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kusu.loadingbutton.LoadingButton;
 
+import dev.eduardoleal.meecommerce.BuildConfig;
 import dev.eduardoleal.meecommerce.Home;
 import dev.eduardoleal.meecommerce.R;
 
 public class SignIn extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
-    Button   btnRecoveryPassword;
+    Button btnRecoveryPassword;
     LoadingButton btnSignIn;
     TextView txtSignUp;
     private FirebaseAuth mAuth;
@@ -46,6 +45,12 @@ public class SignIn extends AppCompatActivity {
 
         // TODO: Initialize context app
         mAuth = FirebaseAuth.getInstance();
+
+        // TODO: Debug Config
+        if (BuildConfig.DEBUG) {
+            edtEmail.setText("edd@edd.com");
+            edtPassword.setText("123456");
+        }
 
         // TODO: Actions
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +105,7 @@ public class SignIn extends AppCompatActivity {
                     } else {
                         btnSignIn.hideLoading();
                         btnSignIn.setEnabled(true);
-                        onUserVerifyEmail();
+                        onUserVerifyEmail(email);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
@@ -114,27 +119,14 @@ public class SignIn extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void onUserVerifyEmail() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Alert");
-        builder.setMessage("Your account is not active, please validate email");
-
-        builder.setPositiveButton("Send email validation", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                user.sendEmailVerification();
-                Toast.makeText(getApplicationContext(), "The email was sent!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNegativeButton("Ok", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    protected void onUserVerifyEmail(String email) {
         onClearInputs();
+        Intent i = new Intent(getApplicationContext(), Activate.class);
+        i.putExtra("email", email);
+        startActivity(i);
     }
 
-    private void onClearInputs(){
+    private void onClearInputs() {
         edtEmail.setText("");
         edtPassword.setText("");
     }

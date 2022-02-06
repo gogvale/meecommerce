@@ -28,6 +28,9 @@
             android:name=".auth.SignIn"
             android:exported="false" />
         <activity
+            android:name=".auth.Activate"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
