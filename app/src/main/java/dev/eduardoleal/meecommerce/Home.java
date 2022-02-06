@@ -41,6 +41,13 @@ public class Home extends AppCompatActivity {
                 onShowProfile();
             }
         });
+
+        btnMeet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onShowMeet();
+            }
+        });
     }
 
     private void onLogout(){
@@ -51,6 +58,11 @@ public class Home extends AppCompatActivity {
 
     private void onShowProfile(){
         Intent i = new Intent(getApplicationContext(), Profile.class);
+        startActivity(i);
+    }
+
+    private void onShowMeet(){
+        Intent i = new Intent(getApplicationContext(), Meet.class);
         startActivity(i);
     }
 }
