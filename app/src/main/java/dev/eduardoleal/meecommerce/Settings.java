@@ -17,7 +17,7 @@ public class Settings extends AppCompatActivity {
     Context context;
     Resources resources;
 
-    TextView txtChangeLng, txtLng;
+    TextView txtChangeLng, txtLng, txtInfoApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,10 @@ public class Settings extends AppCompatActivity {
 
         txtChangeLng = findViewById(R.id.txt_change_language);
         txtLng = findViewById(R.id.txt_lng_demo);
+        txtInfoApp = findViewById(R.id.txt_info_app);
 
         setUILng();
+        setUIConfig();
 
         txtChangeLng.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +37,12 @@ public class Settings extends AppCompatActivity {
                 onChangeLngDialog();
             }
         });
+    }
+
+    private void setUIConfig() {
+        String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
+        String versionName = String.valueOf(BuildConfig.VERSION_NAME);
+        txtInfoApp.setText("Version App: " + versionCode + '/' + versionName);
     }
 
     private void setUILng(){
