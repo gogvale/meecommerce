@@ -2,7 +2,6 @@ package dev.eduardoleal.meecommerce.auth;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -71,6 +70,7 @@ public class Activate extends AppCompatActivity {
                 txtCount.setVisibility(View.VISIBLE);
                 txtCount.setText("Time remaining: " + millisUntilFinished / 1000);
             }
+
             public void onFinish() {
                 btnResend.setEnabled(true);
             }

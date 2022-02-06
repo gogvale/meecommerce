@@ -1,6 +1,7 @@
 package dev.eduardoleal.meecommerce.auth;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kusu.loadingbutton.LoadingButton;
 
@@ -26,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import dev.eduardoleal.meecommerce.BuildConfig;
 import dev.eduardoleal.meecommerce.MainActivity;
 import dev.eduardoleal.meecommerce.R;
 
@@ -52,6 +55,13 @@ public class SignUp extends AppCompatActivity {
 
         // TODO: Initialize context app
         mAuth = FirebaseAuth.getInstance();
+
+        if (BuildConfig.DEBUG) {
+           edtName.setText("Eduardo");
+           edtLastName.setText("Leal");
+           edtPassword.setText("123456");
+           edtRepeatPassword.setText("123456");
+        }
 
         // TODO: Actions
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +120,7 @@ public class SignUp extends AppCompatActivity {
                     registerUserData(user);
                     Toast.makeText(getApplicationContext(), "User created!", Toast.LENGTH_SHORT).show();
                 } else {
+                    Toast.makeText(SignUp.this, "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     btnSignUp.hideLoading();
                     btnSignUp.setEnabled(true);
@@ -139,8 +150,8 @@ public class SignUp extends AppCompatActivity {
         db.collection("users").document(userId).set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                user.sendEmailVerification();
-                onSuccessRegisterUser();
+                String userFullName = userName + " " + userLastName;
+                onUserUpdate(userFullName);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -148,6 +159,22 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Oops there was error, try again later...", Toast.LENGTH_SHORT).show();
                 btnSignUp.hideLoading();
                 btnSignUp.setEnabled(true);
+            }
+        });
+    }
+
+    private void onUserUpdate(String name) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).setPhotoUri(Uri.parse("https://firebasestorage.googleapis.com/v0/b/mobileapps-leal.appspot.com/o/user.png?alt=media&token=d768a211-5907-4807-bada-0a039105b804")).build();
+
+        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    user.sendEmailVerification();
+                    onSuccessRegisterUser();
+                }
             }
         });
     }

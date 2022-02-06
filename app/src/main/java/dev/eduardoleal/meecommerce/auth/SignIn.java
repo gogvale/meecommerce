@@ -48,7 +48,7 @@ public class SignIn extends AppCompatActivity {
 
         // TODO: Debug Config
         if (BuildConfig.DEBUG) {
-            edtEmail.setText("edd@edd.com");
+            edtEmail.setText("venecic913@afarek.com");
             edtPassword.setText("123456");
         }
 

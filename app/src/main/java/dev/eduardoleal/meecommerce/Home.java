@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Home extends AppCompatActivity {
 
-    Button btnLogout;
+    Button btnLogout, btnProfile, btnMeet;
     private FirebaseAuth mAuth;
 
     @Override
@@ -22,6 +22,8 @@ public class Home extends AppCompatActivity {
 
         // TODO: Reference UI
         btnLogout = findViewById(R.id.btn_logout);
+        btnProfile = findViewById(R.id.btn_profile);
+        btnMeet = findViewById(R.id.btn_meet);
 
         // TODO: Initialize context app
         mAuth = FirebaseAuth.getInstance();
@@ -32,11 +34,23 @@ public class Home extends AppCompatActivity {
                 onLogout();
             }
         });
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onShowProfile();
+            }
+        });
     }
 
     private void onLogout(){
         FirebaseAuth.getInstance().signOut();
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+    }
+
+    private void onShowProfile(){
+        Intent i = new Intent(getApplicationContext(), Profile.class);
         startActivity(i);
     }
 }
