@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">MeEcommerce</string>
     <string name="spiner_language">Demo Language</string>
+
+    <string name="title_signin">Welcome Back!</string>
+    <string name="subtitle_signin">We missed you! Login to get started.</string>
+    <string name="instructions_signin">Sign In</string>
+    <string name="edt_email_signin">edd@email.com</string>
+    <string name="edt_password_signin">******</string>
+    <string name="check_signin">Remember me</string>
+    <string name="help_signin">Need Help?</string>
+    <string name="button_sigin">Sign In</string>
+    <string name="register_signin">Don\'t have an account?</string>
+    <string name="register_link_sigin">Register instead</string>
 </resources>

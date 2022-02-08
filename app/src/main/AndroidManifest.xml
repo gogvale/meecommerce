@@ -31,9 +31,6 @@
             android:name=".auth.SignUp"
             android:exported="false" />
         <activity
-            android:name=".auth.SignIn"
-            android:exported="false" />
-        <activity
             android:name=".auth.Activate"
             android:exported="false" />
         <activity

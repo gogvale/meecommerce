@@ -1,42 +1,62 @@
 package dev.eduardoleal.meecommerce.auth;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.kusu.loadingbutton.LoadingButton;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import dev.eduardoleal.meecommerce.BuildConfig;
+import dev.eduardoleal.meecommerce.Crypto;
 import dev.eduardoleal.meecommerce.MainActivity;
 import dev.eduardoleal.meecommerce.R;
+import dev.eduardoleal.meecommerce.Utils;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText edtName, edtLastName, edtEmail, edtPassword, edtRepeatPassword;
-    LoadingButton btnSignUp;
-    TextView txtSignIn;
+    String uriProfile = "https://firebasestorage.googleapis.com/v0/b/mobileapps-leal.appspot.com/o/user.png?alt=media&token=d768a211-5907-4807-bada-0a039105b804";
+    TextView txtTitle, txtSubtitle, txtInstructions, txtUserType, txtBack, txtHoldelReferral;
+    EditText edtFullName, edtPassword, edtRepeatPassword, edtEmail, edtPhone, edtReferral;
+    CheckBox checkTycos;
+    Button btnSignUp;
+    LinearLayoutCompat layout;
+    ProgressBar progress;
     private FirebaseAuth mAuth;
 
     @Override
@@ -44,146 +64,236 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        // TODO: Set UI Config
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark));
+        }
+
         // TODO: Reference UI
-        edtName = findViewById(R.id.edt_name);
-        edtLastName = findViewById(R.id.edt_lastname);
-        edtEmail = findViewById(R.id.edt_email);
-        edtPassword = findViewById(R.id.edt_password);
-        edtRepeatPassword = findViewById(R.id.edt_repeat_password);
-        btnSignUp = findViewById(R.id.btn_signup_user);
-        txtSignIn = findViewById(R.id.txt_signin);
+        txtTitle = findViewById(R.id.txt_title_signup);
+        txtSubtitle = findViewById(R.id.txt_subtitle_signup);
+        txtInstructions = findViewById(R.id.txt_instructions_signup);
+        txtUserType = findViewById(R.id.txt_type_client_signup);
+        txtBack = findViewById(R.id.txt_back_signup);
+        txtHoldelReferral = findViewById(R.id.txt_holder_referral_code_signup);
+        edtFullName = findViewById(R.id.edt_fullname_signup);
+        edtPassword = findViewById(R.id.edt_password_signup);
+        edtRepeatPassword = findViewById(R.id.edt_repeat_password_signup);
+        edtEmail = findViewById(R.id.edt_email_signup);
+        edtPhone = findViewById(R.id.edt_phone_signup);
+        edtReferral = findViewById(R.id.edt_referral_code_signup);
+        checkTycos = findViewById(R.id.check_tycos);
+        btnSignUp = findViewById(R.id.btn_signup);
+        layout = findViewById(R.id.layout_signup);
+        progress = findViewById(R.id.progress_signup);
 
         // TODO: Initialize context app
         mAuth = FirebaseAuth.getInstance();
 
+        // TODO: Debug Config
         if (BuildConfig.DEBUG) {
-           edtName.setText("Eduardo");
-           edtLastName.setText("Leal");
-           edtPassword.setText("123456");
-           edtRepeatPassword.setText("123456");
+            edtFullName.setText("Eduardo Leal");
+            edtPassword.setText("123456");
+            edtRepeatPassword.setText("123456");
+            edtPhone.setText("1234567890");
         }
 
         // TODO: Actions
+        onUpdateUI(1);
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerUser();
+                if (checkTycos.isChecked()) {
+                    onRegisterUser();
+                } else {
+                    onShowSnack("On continue please check terms");
+                }
             }
         });
 
-        txtSignIn.setOnClickListener(new View.OnClickListener() {
+        txtUserType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), SignIn.class);
+                onChangeTypeClient();
+            }
+        });
+
+        txtBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
             }
         });
     }
 
-    private void registerUser() {
-        String name, lastName, email, password, repeatPassword;
+    private void onRegisterUser() {
+        String fullName, email, password, repeatPassword, phone;
 
-        name = edtName.getText().toString().trim();
-        lastName = edtLastName.getText().toString().trim();
+        fullName = edtFullName.getText().toString().trim();
         email = edtEmail.getText().toString().trim();
         password = edtPassword.getText().toString().trim();
         repeatPassword = edtRepeatPassword.getText().toString().trim();
+        phone = edtPhone.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getApplicationContext(), "Please enter name...", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(fullName) && fullName.length() < 5) {
+            onShowSnack("Enter a full name");
             return;
         }
-        if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(getApplicationContext(), "Please enter last name...", Toast.LENGTH_LONG).show();
+
+        if (TextUtils.isEmpty(email) && !Utils.isEmailValid(email)) {
+            onShowSnack("Enter a valid email");
             return;
         }
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "Please enter email...", Toast.LENGTH_LONG).show();
-            return;
-        }
+
         if (TextUtils.isEmpty(password) && password.length() < 6) {
-            Toast.makeText(getApplicationContext(), "Please enter a password, minimum long 6 characters...", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (!password.equals(repeatPassword)) {
-            Toast.makeText(getApplicationContext(), "Password not match...", Toast.LENGTH_LONG).show();
+            onShowSnack("Enter a valid password, minimum 6 characters.");
             return;
         }
 
-        btnSignUp.setEnabled(false);
-        btnSignUp.showLoading();
+        if (!password.equals(repeatPassword)) {
+            onShowSnack("Passwords do not match");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone)) {
+            onShowSnack("Enter a valid phone");
+            return;
+        }
+
+        progress.setVisibility(View.VISIBLE);
+        btnSignUp.setVisibility(View.GONE);
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
-                    registerUserData(user);
-                    Toast.makeText(getApplicationContext(), "User created!", Toast.LENGTH_SHORT).show();
+                    user.sendEmailVerification();
+                    onUserDataRegister(user);
                 } else {
-                    Toast.makeText(SignUp.this, "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    btnSignUp.hideLoading();
-                    btnSignUp.setEnabled(true);
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                        onShowSnack("Email already in use");
+                    }
+                    else{
+                        onShowSnack("Error during sign up, try again later.");
+                    }
+                    progress.setVisibility(View.GONE);
+                    btnSignUp.setVisibility(View.VISIBLE);
                 }
             }
         });
+
     }
 
-    private void registerUserData(FirebaseUser user) {
-        String userId = user.getUid();
-        String userName, userLastName, userEmail;
+    private void onUserDataRegister(FirebaseUser user) {
+        String id, fullName, email, password, phone, clientType, referralCode;
 
-        userName = edtName.getText().toString().trim();
-        userLastName = edtLastName.getText().toString().trim();
-        userEmail = edtEmail.getText().toString().trim();
+        id = user.getUid();
+        fullName = edtFullName.getText().toString().trim();
+        email = edtEmail.getText().toString().trim();
+        phone = edtPhone.getText().toString().trim();
+
+        // TODO: Decode or Encode
+        // Crypto.encryptAndEncode("String_to_encrypt"); or Crypto.decodeAndDecrypt("String_encrypted");
+        password = Crypto.encryptAndEncode(edtPassword.getText().toString().trim());
+
+        referralCode = edtReferral.getText().toString().trim();
+        clientType = edtReferral.getText().toString().trim().length() > 0 ? "admin" : "client";
         Date currentTime = Calendar.getInstance().getTime();
 
         Map<String, Object> dataUser = new HashMap<>();
-        dataUser.put("userId", userId);
-        dataUser.put("userName", userName);
-        dataUser.put("userLastName", userLastName);
-        dataUser.put("userEmail", userEmail);
+        dataUser.put("id", id);
+        dataUser.put("name", fullName);
+        dataUser.put("email", email);
+        dataUser.put("password", password);
+        dataUser.put("phone", phone);
+        dataUser.put("clientType", clientType);
+        dataUser.put("referralCode", referralCode);
         dataUser.put("createAt", currentTime);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("users").document(userId).set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("users").document(id).set(dataUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                String userFullName = userName + " " + userLastName;
-                onUserUpdate(userFullName);
+                onUserProfileUpdate(fullName);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Oops there was error, try again later...", Toast.LENGTH_SHORT).show();
-                btnSignUp.hideLoading();
-                btnSignUp.setEnabled(true);
+                onShowSnack("There is an error saving user information.");
+                progress.setVisibility(View.GONE);
+                btnSignUp.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    private void onUserUpdate(String name) {
+    private void onUserProfileUpdate(String name) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).setPhotoUri(Uri.parse(uriProfile)).build();
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).setPhotoUri(Uri.parse("https://firebasestorage.googleapis.com/v0/b/mobileapps-leal.appspot.com/o/user.png?alt=media&token=d768a211-5907-4807-bada-0a039105b804")).build();
-
+        assert user != null;
         user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    user.sendEmailVerification();
                     onSuccessRegisterUser();
+                    progress.setVisibility(View.GONE);
+                    btnSignUp.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
     private void onSuccessRegisterUser() {
-        Toast.makeText(getApplicationContext(), "Please activated account with email.", Toast.LENGTH_SHORT).show();
-        btnSignUp.hideLoading();
-        btnSignUp.setEnabled(true);
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+        builder.setMessage("User created! to access it is necessary to validate your account by email, enter the link that was sent.");
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void onChangeTypeClient(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+        builder.setMessage("Select a type client");
+        builder.setPositiveButton("Client", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onUpdateUI(1);
+            }
+        });
+        builder.setNegativeButton("Admin", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onUpdateUI(0);
+            }
+        });
+        builder.setNeutralButton("Cancel", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void onUpdateUI(int type){
+        txtUserType.setText(type == 0 ? "Admin" : "Client");
+        txtHoldelReferral.setVisibility(type == 0 ? View.VISIBLE: View.GONE);
+        edtReferral.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
+        edtReferral.setText( type == 0 ? UUID.randomUUID().toString().substring(3): "");
+    }
+
+    private void onShowSnack(String text) {
+        Snackbar snackbar = Snackbar.make(layout, text, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

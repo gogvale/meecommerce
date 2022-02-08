@@ -1,60 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:weightSum="4"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/txt_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/btn_signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:width="200dp"
-        android:backgroundTint="#8BC34A"
-        android:text="Sign In"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_welcome" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:width="200dp"
-        android:backgroundTint="#009688"
-        android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signin" />
+            <TextView
+                android:id="@+id/txt_title_signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="@string/title_signin"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:transitionName="@string/title_signin" />
 
-    <Button
-        android:id="@+id/btn_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:width="200dp"
-        android:backgroundTint="#F44336"
-        android:text="Settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
+            <TextView
+                android:id="@+id/txt_subtitle_signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seg_ui_semibold"
+                android:text="@string/subtitle_signin"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:transitionName="@string/subtitle_signin" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/card_background"
+        android:elevation="36dp">
+
+        <TextView
+            android:id="@+id/txt_instructions_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/seg_ui_semibold"
+            android:text="@string/instructions_signin"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:transitionName="@string/instructions_signin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_email_signin"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/seg_ui_semibold"
+                android:hint="@string/edt_email_signin"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/colorPlaceholder"
+                android:transitionName="@string/edt_email_signin" />
+
+            <EditText
+                android:id="@+id/edt_password_signin"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="48dp"
+                android:background="@drawable/edit_text_background"
+                android:drawableEnd="@drawable/ic_password"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/seg_ui_semibold"
+                android:hint="@string/edt_password_signin"
+                android:inputType="textPassword"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/colorPlaceholder"
+                android:transitionName="@string/edt_password_signin" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="48dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_help_signin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/seg_ui_semibold"
+                    android:text="@string/help_signin"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:transitionName="@string/help_signin" />
+
+                <Button
+                    android:id="@+id/btn_signin"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/seg_ui_semibold"
+                    android:text="@string/button_sigin"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorButtonText"
+                    android:textSize="15sp"
+                    android:transitionName="@string/button_sigin" />
+
+                <ProgressBar
+                    android:id="@+id/progress_signin"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="26dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_register_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/seg_ui_semibold"
+                android:text="@string/register_signin"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:transitionName="@string/register_signin" />
+
+            <TextView
+                android:id="@+id/txt_register_signin_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="@string/register_link_sigin"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="15sp"
+                android:transitionName="@string/register_link_sigin" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
