@@ -1,7 +1,9 @@
 package dev.eduardoleal.meecommerce.auth;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,19 +46,24 @@ import java.util.UUID;
 
 import dev.eduardoleal.meecommerce.BuildConfig;
 import dev.eduardoleal.meecommerce.Crypto;
+import dev.eduardoleal.meecommerce.LocaleHelper;
 import dev.eduardoleal.meecommerce.MainActivity;
 import dev.eduardoleal.meecommerce.R;
+import dev.eduardoleal.meecommerce.Settings;
 import dev.eduardoleal.meecommerce.Utils;
 
 public class SignUp extends AppCompatActivity {
 
     String uriProfile = "https://firebasestorage.googleapis.com/v0/b/mobileapps-leal.appspot.com/o/user.png?alt=media&token=d768a211-5907-4807-bada-0a039105b804";
-    TextView txtTitle, txtSubtitle, txtInstructions, txtUserType, txtBack, txtHoldelReferral;
+    TextView txtTitle, txtSubtitle, txtInstructions, txtUserType, txtBack;
+    TextView txtHoldelReferral, txtHolderFullName, txtHolderEmail, txtHolderPassword, txtHolderRepeatPassword, txtHolderPhone, txtHolderTypeClient;
     EditText edtFullName, edtPassword, edtRepeatPassword, edtEmail, edtPhone, edtReferral;
     CheckBox checkTycos;
     Button btnSignUp;
     LinearLayoutCompat layout;
     ProgressBar progress;
+    Context context;
+    Resources resources;
     private FirebaseAuth mAuth;
 
     @Override
@@ -78,6 +85,12 @@ public class SignUp extends AppCompatActivity {
         txtInstructions = findViewById(R.id.txt_instructions_signup);
         txtUserType = findViewById(R.id.txt_type_client_signup);
         txtBack = findViewById(R.id.txt_back_signup);
+        txtHolderFullName = findViewById(R.id.txt_holder_fullname_signup);
+        txtHolderEmail = findViewById(R.id.txt_holder_email_signup);
+        txtHolderPassword = findViewById(R.id.txt_holder_password_signup);
+        txtHolderRepeatPassword = findViewById(R.id.txt_holder_repeat_password_signup);
+        txtHolderPhone = findViewById(R.id.txt_holder_phone_signup);
+        txtHolderTypeClient = findViewById(R.id.txt_holder_user_type_signup);
         txtHoldelReferral = findViewById(R.id.txt_holder_referral_code_signup);
         edtFullName = findViewById(R.id.edt_fullname_signup);
         edtPassword = findViewById(R.id.edt_password_signup);
@@ -103,6 +116,7 @@ public class SignUp extends AppCompatActivity {
 
         // TODO: Actions
         onUpdateUI(1);
+        setUILng();
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,9 +265,9 @@ public class SignUp extends AppCompatActivity {
 
     private void onSuccessRegisterUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Message");
-        builder.setMessage("User created! to access it is necessary to validate your account by email, enter the link that was sent.");
-        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        builder.setTitle(resources.getString(R.string.dialog_create_user_title));
+        builder.setMessage(resources.getString(R.string.dialog_create_user_message));
+        builder.setPositiveButton(resources.getString(R.string.dialog_create_user_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
@@ -266,21 +280,21 @@ public class SignUp extends AppCompatActivity {
 
     private void onChangeTypeClient(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Message");
-        builder.setMessage("Select a type client");
-        builder.setPositiveButton("Client", new DialogInterface.OnClickListener() {
+        builder.setTitle(resources.getString(R.string.dialog_client_title_signup));
+        builder.setMessage(resources.getString(R.string.dialog_client_instructions_signup));
+        builder.setPositiveButton(resources.getString(R.string.dialog_client_client_signup), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onUpdateUI(1);
             }
         });
-        builder.setNegativeButton("Admin", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(resources.getString(R.string.dialog_client_admin_signup), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onUpdateUI(0);
             }
         });
-        builder.setNeutralButton("Cancel", null);
+        builder.setNeutralButton(resources.getString(R.string.dialog_client_neutral_signup), null);
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -295,5 +309,24 @@ public class SignUp extends AppCompatActivity {
     private void onShowSnack(String text) {
         Snackbar snackbar = Snackbar.make(layout, text, Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    private void setUILng(){
+        String defaultLng = LocaleHelper.getLanguage(SignUp.this);
+        context = LocaleHelper.setLocale(SignUp.this, defaultLng);
+        resources = context.getResources();
+        txtTitle.setText(resources.getString(R.string.title_signup));
+        txtSubtitle.setText(resources.getString(R.string.subtitle_signup));
+        txtInstructions.setText(resources.getString(R.string.instructions_signup));
+        txtHolderFullName.setText(resources.getString(R.string.edt_full_name_signup));
+        txtHolderEmail.setText(resources.getString(R.string.edt_email_signup));
+        txtHolderPassword.setText(resources.getString(R.string.edt_password_signup));
+        txtHolderRepeatPassword.setText(resources.getString(R.string.edt_repeat_password_signup));
+        txtHolderPhone.setText(resources.getString(R.string.edt_phone_signup));
+        txtHolderTypeClient.setText(resources.getString(R.string.dialog_client_signup));
+        checkTycos.setText(resources.getString(R.string.btn_tycos_signup));
+        btnSignUp.setText(resources.getString(R.string.btn_signup));
+        btnSignUp.setText(resources.getString(R.string.btn_signup));
+        txtBack.setText(resources.getString(R.string.btn_signin_signup));
     }
 }

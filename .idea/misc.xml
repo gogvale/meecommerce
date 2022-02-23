@@ -10,13 +10,13 @@
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.247" />
         <entry key="app/src/main/res/layout/activity_activate.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_meet.xml" value="0.2512664640324215" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_recovery.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.40344168260038243" />
         <entry key="app/src/main/res/layout/loading_fs.xml" value="0.22826086956521738" />
       </map>
     </option>

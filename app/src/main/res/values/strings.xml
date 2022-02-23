@@ -5,11 +5,37 @@
     <string name="title_signin">Welcome Back!</string>
     <string name="subtitle_signin">We missed you! Login to get started.</string>
     <string name="instructions_signin">Sign In</string>
-    <string name="edt_email_signin">edd@email.com</string>
+    <string name="edt_email_signin">user@email.com</string>
     <string name="edt_password_signin">******</string>
     <string name="check_signin">Remember me</string>
     <string name="help_signin">Need Help?</string>
     <string name="button_sigin">Sign In</string>
     <string name="register_signin">Don\'t have an account?</string>
     <string name="register_link_sigin">Register instead</string>
+
+    <string name="dialog_lng_title">Select a Language</string>
+    <string name="dialog_option_en">English</string>
+    <string name="dialog_option_es">Spanish</string>
+    <string name="dialog_option_pt">Portuguese</string>
+
+    <string name="title_signup">Ready to join?</string>
+    <string name="subtitle_signup">Nice to see you again, we are ready.</string>
+    <string name="instructions_signup">Sign Up</string>
+    <string name="edt_full_name_signup">Full Name</string>
+    <string name="edt_email_signup">Email</string>
+    <string name="edt_password_signup">Password</string>
+    <string name="edt_repeat_password_signup">Repeat Password</string>
+    <string name="edt_phone_signup">Phone</string>
+    <string name="dialog_client_signup">Type Client</string>
+    <string name="dialog_client_title_signup">Message</string>
+    <string name="dialog_client_instructions_signup">Select a type client</string>
+    <string name="dialog_client_neutral_signup">Cancel</string>
+    <string name="dialog_client_admin_signup">Admin</string>
+    <string name="dialog_client_client_signup">Client</string>
+    <string name="btn_tycos_signup">Accept terms and conditions</string>
+    <string name="btn_signup">Sign Up!</string>
+    <string name="btn_signin_signup">If you already have and account, sign in.</string>
+    <string name="dialog_create_user_title">Message</string>
+    <string name="dialog_create_user_message">User created! to access it is necessary to validate your account by email, enter the link that was sent.</string>
+    <string name="dialog_create_user_positive">Accept</string>
 </resources>

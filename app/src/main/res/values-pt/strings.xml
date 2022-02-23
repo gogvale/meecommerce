@@ -13,4 +13,31 @@
     <string name="button_sigin">Entrar</string>
     <string name="register_signin">Não tem uma conta?</string>
     <string name="register_link_sigin">Registre-se em vez disso</string>
+
+    <string name="dialog_lng_title">Selecione um idioma</string>
+    <string name="dialog_option_en">Inglês</string>
+    <string name="dialog_option_es">Espanhol</string>
+    <string name="dialog_option_pt">Português</string>
+
+    <string name="title_signup">Pronto para participar?</string>
+    <string name="subtitle_signup">Prazer em vê-lo novamente, estamos prontos.</string>
+    <string name="instructions_signup">Inscrever-se</string>
+    <string name="edt_full_name_signup">Nome completo</string>
+    <string name="edt_email_signup">E-mail</string>
+    <string name="edt_password_signup">Senha</string>
+    <string name="edt_repeat_password_signup">Repita a senha</string>
+    <string name="edt_phone_signup">Telefone</string>
+    <string name="dialog_client_signup">Tipo de usuário</string>
+    <string name="dialog_client_title_signup">Mensagem</string>
+    <string name="dialog_client_instructions_signup">Selecione um tipo de cliente</string>
+    <string name="dialog_client_neutral_signup">Cancelar</string>
+    <string name="dialog_client_admin_signup">Admin</string>
+    <string name="dialog_client_client_signup">Cliente</string>
+    <string name="btn_tycos_signup">Aceita termos e Condições</string>
+    <string name="btn_signup">Inscrever-se!</string>
+    <string name="btn_signin_signup">Se você já tem uma conta, faça login.</string>
+
+    <string name="dialog_create_user_title">Mensagem</string>
+    <string name="dialog_create_user_message">Usuário criado! para acessar é necessário validar sua conta por e-mail, entre no link que foi enviado.</string>
+    <string name="dialog_create_user_positive">Aceitar</string>
 </resources>

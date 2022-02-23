@@ -1,15 +1,20 @@
 package dev.eduardoleal.meecommerce;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
@@ -32,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
     TextView txtTitle, txtSubtitle, txtInstructions, txtHelp, txtRegister, txtRegisterAction;
     EditText edtEmail, edtPassword;
     Button btnSignin;
+    ImageButton btnSignInLng;
     LinearLayoutCompat layout;
     ProgressBar progress;
+    Context context;
+    Resources resources;
+    int lang_selected;
     private FirebaseAuth mAuth;
 
     @Override
@@ -51,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_email_signin);
         edtPassword = findViewById(R.id.edt_password_signin);
         btnSignin = findViewById(R.id.btn_signin);
+        btnSignInLng = findViewById(R.id.btn_signin_lng);
         layout = findViewById(R.id.layout_signin);
         progress = findViewById(R.id.progress_signin);
 
@@ -85,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 onSignIn();
             }
         });
+
+        btnSignInLng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChangeLngDialog();
+            }
+        });
+
+        setUILng();
     }
 
     private void onHelp() {
@@ -162,6 +181,81 @@ public class MainActivity extends AppCompatActivity {
     private void onShowSnack(String text) {
         Snackbar snackbar = Snackbar.make(layout, text, Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    private void onChangeLngDialog() {
+        final String[] Language = {resources.getString(R.string.dialog_option_en), resources.getString(R.string.dialog_option_es), resources.getString(R.string.dialog_option_pt)};
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        dialogBuilder.setTitle(resources.getString(R.string.dialog_lng_title)).setSingleChoiceItems(Language, lang_selected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (Language[i].equals(resources.getString(R.string.dialog_option_en))) {
+                    context = LocaleHelper.setLocale(MainActivity.this, "en");
+                    resources = context.getResources();
+                    lang_selected = 0;
+
+                    txtTitle.setText(resources.getString(R.string.title_signin));
+                    txtSubtitle.setText(resources.getString(R.string.subtitle_signin));
+                    txtInstructions.setText(resources.getString(R.string.instructions_signin));
+                    txtHelp.setText(resources.getString(R.string.help_signin));
+                    btnSignin.setText(resources.getString(R.string.button_sigin));
+                    txtRegister.setText(resources.getString(R.string.register_signin));
+                    txtRegisterAction.setText(resources.getString(R.string.register_link_sigin));
+
+                    dialogInterface.dismiss();
+                }
+                if (Language[i].equals(resources.getString(R.string.dialog_option_es))) {
+                    context = LocaleHelper.setLocale(MainActivity.this, "es");
+                    resources = context.getResources();
+                    lang_selected = 1;
+
+                    txtTitle.setText(resources.getString(R.string.title_signin));
+                    txtSubtitle.setText(resources.getString(R.string.subtitle_signin));
+                    txtInstructions.setText(resources.getString(R.string.instructions_signin));
+                    txtHelp.setText(resources.getString(R.string.help_signin));
+                    btnSignin.setText(resources.getString(R.string.button_sigin));
+                    txtRegister.setText(resources.getString(R.string.register_signin));
+                    txtRegisterAction.setText(resources.getString(R.string.register_link_sigin));
+
+                    dialogInterface.dismiss();
+                }
+                if (Language[i].equals(resources.getString(R.string.dialog_option_pt))) {
+                    context = LocaleHelper.setLocale(MainActivity.this, "pt");
+                    resources = context.getResources();
+                    lang_selected = 2;
+
+                    txtTitle.setText(resources.getString(R.string.title_signin));
+                    txtSubtitle.setText(resources.getString(R.string.subtitle_signin));
+                    txtInstructions.setText(resources.getString(R.string.instructions_signin));
+                    txtHelp.setText(resources.getString(R.string.help_signin));
+                    btnSignin.setText(resources.getString(R.string.button_sigin));
+                    txtRegister.setText(resources.getString(R.string.register_signin));
+                    txtRegisterAction.setText(resources.getString(R.string.register_link_sigin));
+
+                    dialogInterface.dismiss();
+                }
+            }
+        }).setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        dialogBuilder.create().show();
+    }
+
+    private void setUILng(){
+        String defaultLng = LocaleHelper.getLanguage(MainActivity.this);
+        context = LocaleHelper.setLocale(MainActivity.this, defaultLng);
+        resources = context.getResources();
+
+        txtTitle.setText(resources.getString(R.string.title_signin));
+        txtSubtitle.setText(resources.getString(R.string.subtitle_signin));
+        txtInstructions.setText(resources.getString(R.string.instructions_signin));
+        txtHelp.setText(resources.getString(R.string.help_signin));
+        btnSignin.setText(resources.getString(R.string.button_sigin));
+        txtRegister.setText(resources.getString(R.string.register_signin));
+        txtRegisterAction.setText(resources.getString(R.string.register_link_sigin));
     }
 
     @Override
