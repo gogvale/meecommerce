@@ -4,10 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,14 +34,21 @@ public class Meet extends AppCompatActivity {
             onBroadcastReceived(intent);
         }
     };
+    TextView txtTitle, txtSubtitle, txtInstructions;
     EditText edtNameMeet;
     Button btnStartMeet;
+
+    Context context;
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
 
+        txtTitle = findViewById(R.id.txt_title_meet);
+        txtSubtitle = findViewById(R.id.txt_subtitle_meet);
+        txtInstructions = findViewById(R.id.txt_instructions_meet);
         edtNameMeet = findViewById(R.id.edt_name_meet);
         btnStartMeet = findViewById(R.id.btn_start_meet);
 
@@ -129,6 +138,16 @@ public class Meet extends AppCompatActivity {
     private void hangUp() {
         Intent hangupBroadcastIntent = BroadcastIntentHelper.buildHangUpIntent();
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(hangupBroadcastIntent);
+    }
+
+    private void setUILng(){
+        String defaultLng = LocaleHelper.getLanguage(Meet.this);
+        context = LocaleHelper.setLocale(Meet.this, defaultLng);
+        resources = context.getResources();
+        txtTitle.setText(resources.getString(R.string.title_meet));
+        txtSubtitle.setText(resources.getString(R.string.subtitle_meet));
+        txtInstructions.setText(resources.getString(R.string.instructions_meet));
+        btnStartMeet.setText(resources.getString(R.string.button_meet));
     }
 
 }

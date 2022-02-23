@@ -47,4 +47,9 @@
     <string name="subtitle_recovery">To recover your password you need to enter the email with which you registered.</string>
     <string name="instructions_recovery">Use your registered email</string>
     <string name="button_recovery">Recover Password</string>
+
+    <string name="title_meet">Meet</string>
+    <string name="subtitle_meet">Use the ID provided by your administrator or your client</string>
+    <string name="instructions_meet">Enter Admin Code or Meet ID</string>
+    <string name="button_meet">Start Meet</string>
 </resources>

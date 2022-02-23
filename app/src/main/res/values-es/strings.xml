@@ -47,4 +47,9 @@
     <string name="subtitle_recovery">To recover your password you need to enter the email with which you registered.</string>
     <string name="instructions_recovery">Utilice su correo electrónico registrado</string>
     <string name="button_recovery">Recuperar contraseña</string>
+
+    <string name="title_meet">Reunirse</string>
+    <string name="subtitle_meet">Use the ID provided by your administrator or your client</string>
+    <string name="instructions_meet">Introduce el código de administrador o el ID de la reunión</string>
+    <string name="button_meet">Iniciar reunión</string>
 </resources>
