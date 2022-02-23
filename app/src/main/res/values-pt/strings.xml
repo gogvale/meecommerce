@@ -53,4 +53,13 @@
     <string name="subtitle_meet">Use o ID fornecido pelo seu administrador ou seu cliente</string>
     <string name="instructions_meet">Insira o código de administrador ou o ID do Meet</string>
     <string name="button_meet">Iniciar reunião</string>
+
+    <string name="title_profile">Perfil</string>
+    <string name="instructions_profile">Atualizar perfil</string>
+    <string name="btn_update_profile">Atualizar perfil</string>
+
+    <string name="cheers_morning">Good Morning</string>
+    <string name="cheers_afternoon">Boa tarde</string>
+    <string name="cheers_evening">Boa tarde</string>
+    <string name="cheers_night">Boa noite</string>
 </resources>

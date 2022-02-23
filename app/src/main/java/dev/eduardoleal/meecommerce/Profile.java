@@ -1,8 +1,13 @@
 package dev.eduardoleal.meecommerce;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,10 +28,13 @@ import java.util.Calendar;
 
 public class Profile extends AppCompatActivity {
 
-    TextView txtCheers;
+    TextView txtTitle, txtInstructions, txtCheers, txtPlaceholderFullName, txtPlaceholderEmail, txtPlaceholderPhone;
     EditText edtFullName, edtEmail, edtPhone;
     Button btnUpdate;
     ImageView imageProfile;
+
+    Context context;
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +46,25 @@ public class Profile extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_phone_profile);
         btnUpdate = findViewById(R.id.btn_update_profile);
         imageProfile = findViewById(R.id.imageProfile);
-        txtCheers = findViewById(R.id.txt_cheers);
 
+        txtCheers = findViewById(R.id.txt_cheers);
+        txtTitle = findViewById(R.id.txt_title_profile);
+        txtInstructions = findViewById(R.id.txt_instructions_profile);
+        txtPlaceholderFullName = findViewById(R.id.txt_holder_fullname_profile);
+        txtPlaceholderEmail = findViewById(R.id.txt_holder_email_profile);
+        txtPlaceholderPhone = findViewById(R.id.txt_holder_phone_profile);
+
+        // TODO: Set UI Config
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.primary_dark));
+        }
+
+        // TODO: Actions
         onUpdateUI();
+        setUILng();
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +108,6 @@ public class Profile extends AppCompatActivity {
             edtEmail.setText(email);
             edtPhone.setText(phone);
             Glide.with(getApplicationContext()).load(image).into(imageProfile);
-
-            onSetCheers();
         }
     }
 
@@ -93,13 +115,26 @@ public class Profile extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
         if(timeOfDay >= 0 && timeOfDay < 12){
-            txtCheers.setText("Good Morning");
+            txtCheers.setText(resources.getString(R.string.cheers_morning).length() > 0 ? resources.getString(R.string.cheers_morning) : "");
         }else if(timeOfDay >= 12 && timeOfDay < 16){
-            txtCheers.setText("Good Afternoon");
+            txtCheers.setText(resources.getString(R.string.cheers_afternoon).length() > 0 ? resources.getString(R.string.cheers_afternoon) : "");
         }else if(timeOfDay >= 16 && timeOfDay < 21){
-            txtCheers.setText("Good Evening");
+            txtCheers.setText(resources.getString(R.string.cheers_evening).length() > 0 ? resources.getString(R.string.cheers_evening) : "");
         }else if(timeOfDay >= 21 && timeOfDay < 24){
-            txtCheers.setText("Good Night");
+            txtCheers.setText(resources.getString(R.string.cheers_night).length() > 0 ? resources.getString(R.string.cheers_night) : "");
         }
+    }
+
+    private void setUILng(){
+        String defaultLng = LocaleHelper.getLanguage(Profile.this);
+        context = LocaleHelper.setLocale(Profile.this, defaultLng);
+        resources = context.getResources();
+        txtTitle.setText(resources.getString(R.string.title_profile));
+        txtInstructions.setText(resources.getString(R.string.instructions_profile));
+        btnUpdate.setText(resources.getString(R.string.btn_update_profile));
+        txtPlaceholderFullName.setText(resources.getString(R.string.edt_full_name_signup));
+        txtPlaceholderEmail.setText(resources.getString(R.string.edt_email_signup));
+        txtPlaceholderPhone.setText(resources.getString(R.string.edt_phone_signup));
+        onSetCheers();
     }
 }

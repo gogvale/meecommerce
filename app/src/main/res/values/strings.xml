@@ -52,4 +52,13 @@
     <string name="subtitle_meet">Use the ID provided by your administrator or your client</string>
     <string name="instructions_meet">Enter Admin Code or Meet ID</string>
     <string name="button_meet">Start Meet</string>
+    
+    <string name="title_profile">Profile</string>
+    <string name="instructions_profile">Update Profile</string>
+    <string name="btn_update_profile">Update Profile</string>
+
+    <string name="cheers_morning">Good Morning</string>
+    <string name="cheers_afternoon">Good Afternoon</string>
+    <string name="cheers_evening">Good Evening</string>
+    <string name="cheers_night">Good Night</string>
 </resources>
