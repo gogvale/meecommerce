@@ -1,19 +1,26 @@
 package dev.eduardoleal.meecommerce;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.app.AppCompatActivity;
+
+import dev.eduardoleal.meecommerce.auth.SignUp;
 
 public class Home extends AppCompatActivity {
 
-    Button btnLogout, btnProfile, btnMeet;
-    private FirebaseAuth mAuth;
+    TextView txtSubtitle, txtMeet;
+    LinearLayout btnMeet;
+    ImageButton btnProfile;
+
+    Context context;
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +28,18 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // TODO: Reference UI
-        btnLogout = findViewById(R.id.btn_logout);
-        btnProfile = findViewById(R.id.btn_profile);
+        txtSubtitle = findViewById(R.id.txt_subtitle_home);
+        txtMeet = findViewById(R.id.txt_button_meet_home);
         btnMeet = findViewById(R.id.btn_meet);
+        btnProfile = findViewById(R.id.btn_profile_home);
 
-        // TODO: Initialize context app
-        mAuth = FirebaseAuth.getInstance();
+        // TODO: Actions
+        setUILng();
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        btnMeet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLogout();
+                onShowMeet();
             }
         });
 
@@ -41,28 +49,23 @@ public class Home extends AppCompatActivity {
                 onShowProfile();
             }
         });
-
-        btnMeet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onShowMeet();
-            }
-        });
     }
 
-    private void onLogout(){
-        FirebaseAuth.getInstance().signOut();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+    private void onShowMeet() {
+        Intent i = new Intent(getApplicationContext(), Meet.class);
         startActivity(i);
     }
 
-    private void onShowProfile(){
+    private void onShowProfile() {
         Intent i = new Intent(getApplicationContext(), Profile.class);
         startActivity(i);
     }
 
-    private void onShowMeet(){
-        Intent i = new Intent(getApplicationContext(), Meet.class);
-        startActivity(i);
+    private void setUILng(){
+        String defaultLng = LocaleHelper.getLanguage(Home.this);
+        context = LocaleHelper.setLocale(Home.this, defaultLng);
+        resources = context.getResources();
+        txtSubtitle.setText(resources.getString(R.string.subtitle_home));
+        txtMeet.setText(resources.getString(R.string.button_meet_home));
     }
 }

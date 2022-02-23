@@ -39,4 +39,12 @@
     <string name="dialog_create_user_title">Mensaje</string>
     <string name="dialog_create_user_message">Usuario creado! para acceder es necesario validar su cuenta por correo electrónico, ingrese al link que le fue enviado.</string>
     <string name="dialog_create_user_positive">Aceptar</string>
+
+    <string name="subtitle_home">Menú</string>
+    <string name="button_meet_home">Reunirse</string>
+
+    <string name="title_recovery">Recuperar contraseña</string>
+    <string name="subtitle_recovery">To recover your password you need to enter the email with which you registered.</string>
+    <string name="instructions_recovery">Utilice su correo electrónico registrado</string>
+    <string name="button_recovery">Recuperar contraseña</string>
 </resources>

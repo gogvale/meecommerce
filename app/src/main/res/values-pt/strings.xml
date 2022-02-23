@@ -40,4 +40,12 @@
     <string name="dialog_create_user_title">Mensagem</string>
     <string name="dialog_create_user_message">Usuário criado! para acessar é necessário validar sua conta por e-mail, entre no link que foi enviado.</string>
     <string name="dialog_create_user_positive">Aceitar</string>
+
+    <string name="subtitle_home">Cardápio</string>
+    <string name="button_meet_home">Conheça</string>
+
+    <string name="title_recovery">Recuperar senha</string>
+    <string name="subtitle_recovery">Para recuperar sua senha, você precisa digitar o e-mail com o qual se registrou.</string>
+    <string name="instructions_recovery">Use seu e-mail cadastrado</string>
+    <string name="button_recovery">Recuperar senha</string>
 </resources>
