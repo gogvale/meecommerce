@@ -174,6 +174,20 @@
                     android:textColor="@color/colorButtonText"
                     android:textSize="15sp" />
 
+                <Button
+                    android:id="@+id/btn_logout_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background_secondary"
+                    android:fontFamily="@font/seg_ui_semibold"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorButtonText"
+                    android:textSize="15sp" />
+
 
             </LinearLayout>
         </RelativeLayout>

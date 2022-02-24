@@ -1,6 +1,7 @@
 package dev.eduardoleal.meecommerce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -30,7 +31,7 @@ public class Profile extends AppCompatActivity {
 
     TextView txtTitle, txtInstructions, txtCheers, txtPlaceholderFullName, txtPlaceholderEmail, txtPlaceholderPhone;
     EditText edtFullName, edtEmail, edtPhone;
-    Button btnUpdate;
+    Button btnUpdate, btnSignOut;
     ImageView imageProfile;
 
     Context context;
@@ -45,6 +46,7 @@ public class Profile extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_email_profile);
         edtPhone = findViewById(R.id.edt_phone_profile);
         btnUpdate = findViewById(R.id.btn_update_profile);
+        btnSignOut = findViewById(R.id.btn_logout_profile);
         imageProfile = findViewById(R.id.imageProfile);
 
         txtCheers = findViewById(R.id.txt_cheers);
@@ -72,6 +74,13 @@ public class Profile extends AppCompatActivity {
                 onUpdateProfile();
             }
         });
+
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLogout();
+            }
+        });
     }
 
     private void onUpdateProfile() {
@@ -94,6 +103,12 @@ public class Profile extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Email is not empty", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void onLogout(){
+        FirebaseAuth.getInstance().signOut();
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
     }
 
     private void onUpdateUI() {
@@ -132,6 +147,7 @@ public class Profile extends AppCompatActivity {
         txtTitle.setText(resources.getString(R.string.title_profile));
         txtInstructions.setText(resources.getString(R.string.instructions_profile));
         btnUpdate.setText(resources.getString(R.string.btn_update_profile));
+        btnSignOut.setText(resources.getString(R.string.btn_sign_out));
         txtPlaceholderFullName.setText(resources.getString(R.string.edt_full_name_signup));
         txtPlaceholderEmail.setText(resources.getString(R.string.edt_email_signup));
         txtPlaceholderPhone.setText(resources.getString(R.string.edt_phone_signup));

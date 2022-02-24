@@ -108,10 +108,10 @@ public class SignUp extends AppCompatActivity {
 
         // TODO: Debug Config
         if (BuildConfig.DEBUG) {
-            edtFullName.setText("Eduardo Leal");
-            edtPassword.setText("123456");
-            edtRepeatPassword.setText("123456");
-            edtPhone.setText("1234567890");
+            //edtFullName.setText("Eduardo Leal");
+            //edtPassword.setText("123456");
+            //edtRepeatPassword.setText("123456");
+            //edtPhone.setText("1234567890");
         }
 
         // TODO: Actions

@@ -61,4 +61,6 @@
     <string name="cheers_afternoon">Good Afternoon</string>
     <string name="cheers_evening">Good Evening</string>
     <string name="cheers_night">Good Night</string>
+
+    <string name="btn_sign_out">Logout</string>
 </resources>

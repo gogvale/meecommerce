@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/button_background.xml" value="0.247" />
+        <entry key="app/src/main/res/drawable/button_background_secondary.xml" value="0.365" />
         <entry key="app/src/main/res/drawable/card_background.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/card_item_background_menu.xml" value="0.229" />
         <entry key="app/src/main/res/drawable/edit_text_background.xml" value="0.247" />
@@ -14,7 +15,7 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_meet.xml" value="0.2512664640324215" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.6141304347826086" />
         <entry key="app/src/main/res/layout/activity_recovery.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.33" />

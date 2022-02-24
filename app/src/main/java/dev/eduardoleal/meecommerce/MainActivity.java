@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         // TODO: Debug Config
         if (BuildConfig.DEBUG) {
             // Warning: This user was registered by me, please do not use it because I will find you and cut off your fingers.
-            edtEmail.setText("xidoyi2507@chinamkm.com");
-            edtPassword.setText("123456");
+            //edtEmail.setText("xidoyi2507@chinamkm.com");
+            //edtPassword.setText("123456");
         }
 
         // TODO: Actions

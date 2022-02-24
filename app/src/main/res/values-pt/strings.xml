@@ -6,7 +6,7 @@
     <string name="title_signin">Bem vindo de volta!</string>
     <string name="subtitle_signin">Nós sentimos saudades de você! Faça login para começar.</string>
     <string name="instructions_signin">Entrar</string>
-    <string name="edt_email_signin">edd@email.com</string>
+    <string name="edt_email_signin">jhon@doe.com</string>
     <string name="edt_password_signin">******</string>
     <string name="check_signin">Lembre de mim</string>
     <string name="help_signin">Preciso de ajuda?</string>
@@ -62,4 +62,6 @@
     <string name="cheers_afternoon">Boa tarde</string>
     <string name="cheers_evening">Boa tarde</string>
     <string name="cheers_night">Boa noite</string>
+
+    <string name="btn_sign_out">Sair</string>
 </resources>
